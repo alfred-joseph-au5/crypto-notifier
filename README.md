@@ -1,2 +1,0 @@
-# crypto-notifier
-Crypto Notifier

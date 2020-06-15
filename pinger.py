@@ -46,27 +46,6 @@ def fetch_new_price_nomics_api():
     response = req.json()
     return response
 
-# Function send notifications to the subscibed options
-# def send_notification():
-#     if(config.email is not False):
-#         try:
-#             send_email()
-#         except:
-#             print('\n\nEmail Error : ', 'Please enter a valid email ID!')
-#             exit()
-#     if(config.twitter is not False):
-#         try:
-#             twitter_dm()
-#         except:
-#             print('\n\nTwitter Error : ', 'Please check your twitter handle and make sure you have enabled "Receive messages from anyone" setting.\nAccept the message request once you get your first notification.\n')
-#             exit()
-#     if(config.sms is not False):
-#         try:
-#             send_sms()
-#         except:
-#             print('\n\nSMS Error : ', 'Error sending message to the number you have provided. Please check the number and try again!\n')
-#             exit()
-
 # Function to send email to anyone using your Gmail account
 def send_email():
     try:
@@ -131,10 +110,6 @@ def twitter_dm():
 # Function to notify via SMS using Nexmo / Vonage
 def send_sms():
     try:
-        # client = nexmo.Client(
-        #     key ='31098d08', 
-        #     secret ='S51NWsHqNybu0jsk'
-        # ) # Crypto
         # Setup up the nexmo client
         client = nexmo.Client(
             key = defaults.VONAGE_KEY, 

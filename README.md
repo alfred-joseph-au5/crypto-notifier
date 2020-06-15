@@ -2,6 +2,12 @@
 
 A Python program that sends realtime notifications based on the Crypto currency selected.
 
+## Table of contents
+* [Requirements](#requirements)
+* [Setup](#setup)
+* [Usage](#usage)
+* [CLI - Optional Arguments](#cli-optional-arguments)
+
 ## Requirements
 
 You need Python 3.x or later to run mypy. You can have multiple Python versions (2.x and 3.x) installed on the same system without problems.

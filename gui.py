@@ -612,6 +612,8 @@ class MainWindow:
         self.btn_stop.config(state = 'disabled')
         self.btn_run.config(state = 'normal')
 
+    # A toggle function which disables inputs and buttons 
+    # as soon as the service starts
     def freeze_inputs(self, flag):
         state = 'disabled' if flag == True else 'normal'
         self.dd_currency.config(state = state)

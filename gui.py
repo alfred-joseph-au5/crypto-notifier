@@ -2,6 +2,7 @@ import sys
 import os
 import time
 from datetime import datetime
+import logging
 
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -9,11 +10,59 @@ from tkinter import messagebox
 import pytz
 import tzlocal
 
+import pandas as pd
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.figure import Figure
+import matplotlib.animation as animation
+from matplotlib import style
+style.use("ggplot")
+
 import currency as currency
 import config as config
 import variables as variables
 import defaults as defaults
 import pinger as pinger
+import csvupdates as csv
+
+
+f = Figure(figsize=(5,5), dpi=100)
+a = f.add_subplot(111)
+
+def read_csv():
+    data = pd.read_csv('data.csv')
+    data['Date'] = pd.to_datetime(data['Date'])
+    data.sort_values('Date', inplace=True)
+    price_date = data['Date']
+    price = data['Price']
+    return price_date, price
+
+def animate(canvas):
+    # logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
+    # logging.info('Admin logged in')
+    
+
+    # pullData = open('sampleData.txt').read()
+    # dataList = pullData.split('\n')
+    # xList = []
+    # yList = []
+    # for eachLine in dataList:
+    #     if len(eachLine)>1:
+    #         x, y = eachLine.split(',')
+    #         xList.append(int(x))
+    #         yList.append(int(y))
+    xList, yList = read_csv()
+    a.clear()
+    a.plot(xList, yList)
+    canvas.draw()
+
+def create_graph(frame):
+    # a.plot([1,2,3,4,5,6,7,8], [5,6,1,3,8,9,3,5])
+    canvas = FigureCanvasTkAgg(f, frame)
+    # animate()
+    canvas.draw()
+    canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
@@ -23,6 +72,7 @@ def vp_start_gui():
     variables.set_Tk_var()
     top = MainWindow (root)
     variables.init(root, top)
+    ani = animation.FuncAnimation(f, animate, interval=3000)
     root.mainloop()
 
 w = None
@@ -528,6 +578,8 @@ class MainWindow:
         )
         lt = str(utc_time.replace(tzinfo = pytz.utc).astimezone(ltz))
         lt = lt[0:19]
+        csv.insert_data(str(self.l_coin_price['text']), datetime.strptime(lt,'%Y-%m-%d %H:%M:%S'))
+        animate(self.canvas)
         config.msg = ' '.join([
             'Hey!\nThe Value of', selectCoin, 
             'is now', variables.dd_currency.get().strip(), 
@@ -595,8 +647,16 @@ class MainWindow:
                 )
                 self.stop_service()
 
+    def create_graph(self):
+        # a.plot([1,2,3,4,5,6,7,8], [5,6,1,3,8,9,3,5])
+        self.canvas = FigureCanvasTkAgg(f, self.frame_graph)
+        animate(self.canvas)
+        self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
     def start_service(self):
         if(self.setup_config()):
+            # create_graph(self.frame_advanced)
+            self.create_graph()
             # print('service started!')
             # pinger.setup_coin_api()
             pinger.setup_nomics_api()

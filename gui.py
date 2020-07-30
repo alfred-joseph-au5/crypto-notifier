@@ -32,10 +32,17 @@ a = f.add_subplot(111)
 
 def read_csv():
     data = pd.read_csv('data.csv')
+    # data.drop_duplicates(subset = "Date",
+    #                      keep = False, 
+    #                      inplace = True
+    #                     )
     data['Date'] = pd.to_datetime(data['Date'])
-    data.sort_values('Date', inplace=True)
+    data.sort_values('Date', inplace = True)
     price_date = data['Date']
     price = data['Price']
+    # logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
+    # for i in price:
+    #     logging.info(i)
     return price_date, price
 
 def animate(canvas):
@@ -116,7 +123,7 @@ class MainWindow:
         self.style.map('.', bg =
             [('selected', _compcolor), ('active',_ana2color)])
 
-        top.geometry("579x450+423+86")
+        top.geometry("579x480+423+86")
         top.minsize(176, 10)
         top.maxsize(2812, 883)
         top.resizable(0, 0)
@@ -127,7 +134,7 @@ class MainWindow:
 
         self.frame_main = tk.Frame(top)
         self.frame_main.place(relx = 0.0, rely = 0.0, 
-                relheight = 1.011, relwidth = 1.009)
+                relheight = 1.01, relwidth = 1.009)
         self.frame_main.configure(relief = 'groove')
         self.frame_main.configure(borderwidth = "2")
         self.frame_main.configure(relief = "groove")
@@ -136,8 +143,8 @@ class MainWindow:
         self.frame_main.configure(highlightcolor = "black")
 
         self.frame_content = tk.Frame(self.frame_main)
-        self.frame_content.place(relx = 0.033, rely = 0.044, 
-                relheight = 0.187, relwidth = 0.921)
+        self.frame_content.place(relx = 0.033, rely = 0.041, 
+                relheight = 0.175, relwidth = 0.921)
         self.frame_content.configure(relief = 'groove')
         self.frame_content.configure(borderwidth = "2")
         self.frame_content.configure(relief = "groove")
@@ -176,8 +183,8 @@ class MainWindow:
         self.btn_stop.configure(command = self.stop_service)
 
         self.frame_display = tk.Frame(self.frame_main)
-        self.frame_display.place(relx = 0.067, rely = 0.088, 
-                relheight = 0.099, relwidth = 0.488)
+        self.frame_display.place(relx = 0.067, rely = 0.082, 
+                relheight = 0.093, relwidth = 0.49)
         self.frame_display.configure(relief = 'groove')
         self.frame_display.configure(borderwidth = "2")
         self.frame_display.configure(relief = "groove")
@@ -186,7 +193,7 @@ class MainWindow:
         self.frame_display.configure(highlightcolor = "black")
 
         self.l_coin_price = tk.Label(self.frame_main)
-        self.l_coin_price.place(relx = 0.182, rely = 0.101, 
+        self.l_coin_price.place(relx = 0.182, rely = 0.095, 
                 height = 32, width = 129)
         self.l_coin_price.configure(activebackground = "#f9f9f9")
         self.l_coin_price.configure(activeforeground = "black")
@@ -199,8 +206,8 @@ class MainWindow:
         self.l_coin_price.configure(text = '''00.00''')
 
         self.dd_currency = ttk.Combobox(self.frame_main)
-        self.dd_currency.place(relx = 0.082, rely = 0.101, 
-                relheight = 0.07, relwidth = 0.089)
+        self.dd_currency.place(relx = 0.082, rely = 0.095, 
+                relheight = 0.066, relwidth = 0.087)
         self.dd_currency.configure(textvariable = variables.dd_currency)
         self.dd_currency.configure(takefocus = "")
         self.dd_currency.configure(cursor = "hand2")
@@ -208,8 +215,8 @@ class MainWindow:
         self.dd_currency.set(defaults.CURRENCY)
 
         self.dd_coin = ttk.Combobox(self.frame_main)
-        self.dd_coin.place(relx = 0.418, rely = 0.101, 
-                relheight = 0.068, relwidth = 0.12)
+        self.dd_coin.place(relx = 0.418, rely = 0.095, 
+                relheight = 0.066, relwidth = 0.122)
         self.dd_coin.configure(textvariable = variables.dd_coin)
         self.dd_coin.configure(takefocus = "")
         self.dd_coin.configure(cursor = "hand2")
@@ -217,8 +224,8 @@ class MainWindow:
         self.dd_coin.set(defaults.COIN)
 
         self.frame_advanced = tk.LabelFrame(self.frame_main)
-        self.frame_advanced.place(relx = 0.033, rely = 0.242, 
-                relheight = 0.714, relwidth = 0.921)
+        self.frame_advanced.place(relx = 0.033, rely = 0.227, 
+                relheight = 0.68, relwidth = 0.921)
         self.frame_advanced.configure(relief = 'groove')
         self.frame_advanced.configure(borderwidth = "2")
         self.frame_advanced.configure(relief = "groove")
@@ -229,7 +236,7 @@ class MainWindow:
 
         self.frame_options = tk.LabelFrame(self.frame_advanced)
         self.frame_options.place(relx = 0.037, rely = 0.020, 
-                relheight = 0.631, relwidth = 0.92)
+                relheight = 0.590, relwidth = 0.92)
         self.frame_options.configure(relief = 'groove')
         self.frame_options.configure(borderwidth = "2")
         self.frame_options.configure(relief = "groove")
@@ -239,7 +246,7 @@ class MainWindow:
         self.frame_options.configure(text = ' Options ')
 
         self.frame_options1 = tk.LabelFrame(self.frame_options)
-        self.frame_options1.place(relx = 0.02, rely = 0.068, 
+        self.frame_options1.place(relx = 0.02, rely = 0.030, 
                 relheight = 0.854, relwidth = 0.475)
         self.frame_options1.configure(relief = 'groove')
         self.frame_options1.configure(borderwidth = "2")
@@ -331,7 +338,7 @@ class MainWindow:
         self.l_notify_interval.configure(text = '''minutes.''')
 
         self.frame_options2 = tk.LabelFrame(self.frame_options)
-        self.frame_options2.place(relx = 0.505, rely = 0.068,
+        self.frame_options2.place(relx = 0.505, rely = 0.030,
                 relheight = 0.854, relwidth = 0.475)
         self.frame_options2.configure(relief = 'groove')
         self.frame_options2.configure(borderwidth = "2")
@@ -447,12 +454,42 @@ class MainWindow:
         self.e_text_msg.configure(state = 'disabled')
 
         self.frame_graph = tk.Frame(self.frame_advanced)
-        self.frame_graph.place(relx = 0.037, rely = 0.708, 
-                relheight = 0.262, relwidth = 0.92)
+        self.frame_graph.place(relx = 0.037, rely = 0.637, 
+                relheight = 0.326, relwidth = 0.92)
         self.frame_graph.configure(relief = 'groove')
         self.frame_graph.configure(borderwidth = "2")
         self.frame_graph.configure(relief = "groove")
         self.frame_graph.configure(bg = "#d9d9d9")
+
+        self.frame_projectby = tk.Frame(self.frame_main)
+        self.frame_projectby.place(relx = 0.002, rely = 0.928, 
+                relheight = 0.062, relwidth = 0.988)
+        self.frame_projectby.configure(relief='sunken')
+        self.frame_projectby.configure(borderwidth="1")
+        self.frame_projectby.configure(relief="sunken")
+        self.frame_projectby.configure(background="#d8d8d8")
+
+        self.l_projectby_name = tk.Label(self.frame_projectby)
+        self.l_projectby_name.place(relx = 0.01, rely = 0.133, 
+                height = 21, width = 144)
+        self.l_projectby_name.configure(background="#d9d9d9")
+        self.l_projectby_name.configure(disabledforeground="#a3a3a3")
+        self.l_projectby_name.configure(foreground="#000000")
+        self.l_projectby_name.configure(text='''Project by Alfred Joseph''')
+
+        self.l_projectby_linkedin = tk.Label(self.frame_projectby)
+        self.l_projectby_linkedin.place(relx = 0.641, rely = 0.133, 
+                height = 21, width = 204)
+        self.l_projectby_linkedin.configure(activebackground="#f9f9f9")
+        self.l_projectby_linkedin.configure(activeforeground="black")
+        self.l_projectby_linkedin.configure(background="#d9d9d9")
+        self.l_projectby_linkedin.configure(disabledforeground="#a3a3a3")
+        self.l_projectby_linkedin.configure(foreground="#000000")
+        self.l_projectby_linkedin.configure(highlightbackground="#d9d9d9")
+        self.l_projectby_linkedin.configure(highlightcolor="black")
+        self.l_projectby_linkedin.configure(
+            text='''linkedin.com/in/alfredjosephofficial/'''
+        )
 
     # Function to setup the api with user selected options
     def setup_config(self):
